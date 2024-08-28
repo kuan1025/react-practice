@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello react</title>
+</head>
+<body>
+
+    <!-- perpare a container -->
+     <div id="test"></div>
+
+
+
+    <!-- import react core lib -->
+     <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+
+
+ <!-- use js to create VDOM-->
+<script type="text/javascript">
+    // 1Create virtual DOM [using js syntax here] React.createElement (label, label attribute, content)
+    const VDOM = React.createElement('h1',{id:"title"},"Hello JS") // Nesting structure makes it difficult to declare, so that is why developer prefer JSX
+    // 2.Rendering, if there are multiple renderings of the same container, the later ones will overwrite the previous ones.
+    ReactDOM.render(VDOM,document.getElementById("test"));
+    // VDOM is a object
+    console.log(VDOM,typeof VDOM);
+    console.log(document.getElementById("test"));
+    // V DOM is lighter
+    // V DOM exist in ram, so it doesn't that much of attribute of real dom
+    // V DOM will be convert to real dom and render to real dom
+    //debugger
+    
+</script>
+
+</body>
+</html>
