@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title{
+            background-color: orange;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+
+        <!-- perpare a container -->
+        <div id="test"></div>
+
+    
+</body>
+        <!-- import react core lib -->
+        <script type="text/javascript" src="../React-js/react.development.js"></script>
+        <!-- import react-dom lib, supporting react control DOM  -->
+        <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+        <!-- import babel , convert jsx to js -->
+        <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+        <script type="text/babel">
+
+            const nodeId = 'node1';
+            const nodeData = 'Hello React !';
+            
+            // 1. Create a virtual DOM using React.createElement (tag, tag attributes, content)
+            const VDOM =
+            (<h2 className="title" id = {nodeId}> 
+                <span style={{color:'white',fontSize:'29px'}}>  {nodeData.toLocaleLowerCase()} </span>
+            </h2>)
+            
+
+            // 2. Render the virtual DOM. If there are multiple renders to the same container,
+            // the latter will overwrite the former.
+            ReactDOM.render(VDOM , document.getElementById('test'));
+            
+           
+    /*
+    1. Define the virtual DOM without using quotes ("").
+    2. Use {} to include jsx expressions within tags.
+    3. Use `className` instead of `class` to specify class names.
+    4. Inline styles must be written as style={{property: "value"}}.
+    5. There must be only one root element; multiple root elements are not allowed.
+    6. Tags must be properly closed.
+    7. If a tag starts with a lowercase letter, React will render it as an HTML element.
+       If the corresponding HTML element doesn't exist, it will throw an error.
+       If a tag starts with an uppercase letter, React will attempt to render a component.
+       If the component doesn't exist, it will throw an error.
+    */
+
+        </script>
+
+</html>
