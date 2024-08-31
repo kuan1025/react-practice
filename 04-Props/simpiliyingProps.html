@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test1"></div>
+     <div id="test2"></div>
+     <div id="test3"></div>
+    
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <!-- version 16 => support prop-types -->
+    <script type="text/javascript" src="../React-js/prop-types.js"></script>
+
+    <script type="text/babel">
+
+        // create component
+        class Person extends React.Component{
+        
+
+        // Make propTypes & defaultProps become static and define them in class
+
+        // Enforcing Prop Types with propTypes 
+        static propTypes ={
+            // name: React.PropTypes.string   version 15 or earlier versions  
+             name: PropTypes.string.isRequired,
+             gender: PropTypes.string,
+             age: PropTypes.number,    
+             speak: PropTypes.func
+        }
+
+        static defaultProps = {
+            gender: 'Null'
+        }
+            render() {
+                const {name,gender,age} = this.props;
+                // this.props.name = 'Damian'  // this line will cause error, cuz props is read-only property
+                return (
+                    <ul>
+                        <li>name : {name}</li>
+                        <li>gender : {gender}</li>
+                        <li>age : {age+1}</li>
+                    </ul>
+                )
+            }
+
+        }
+
+
+
+
+        // Type Enforcement , Avoiding Unexpected Results(example：String ＋1 VS number + 1)
+        const person = {name : 'Quan', age : 25, gender : 'male'};
+        ReactDOM.render(<Person {...person} />, document.getElementById('test2'));
+
+        ReactDOM.render(<Person name = 'Jecky' age ={30} gender = 'male' speak = {speak} />, document.getElementById('test1'));
+        ReactDOM.render(<Person name = 'Lisa' age ='30'  />, document.getElementById('test3'));
+        
+        function speak(){
+            console.log('speaking')
+        }
+
+
+    </script>
+
+
+</html>

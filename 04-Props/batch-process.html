@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test1"></div>
+     <div id="test2"></div>
+     <div id="test3"></div>
+    
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        // create component
+        class Person extends React.Component{
+
+            render() {
+                const {name,gender,age} = this.props;
+                
+                return (
+                    <ul>
+                        <li>name : {name}</li>
+                        <li>gender : {gender}</li>
+                        <li>age : {age}</li>
+                    </ul>
+                )
+            }
+
+        }
+
+        const person = {name : 'Quan', age : '25', gender : 'male'};
+        // In JavaScript, the spread operator (...) is commonly used to expand an array or an object into its individual elements.
+        // you can't directly expand an object’s properties into individual arguments in functions.
+
+        // In React (JSX), the spread operator can be used effectively to pass all properties of an object as   props to a component.
+        // This is a convenient way to pass multiple props without listing them individually.
+        ReactDOM.render(<Person {...person} />, document.getElementById('test1'));
+
+        
+
+
+    </script>
+
+
+</html>
