@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test"></div>
+
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        // create component
+        class Life extends React.Component{
+            
+
+            state = {opacity:1}
+
+
+            removeNode = () => {
+                // unmount
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+            }
+
+            // After mounting,  this API will be called
+            componentDidMount(){
+
+                this.timer = setInterval(()=>{
+                let opacity = this.state.opacity - 0.1;
+                if(opacity <= 0){
+                    opacity = 1;
+                }
+                this.setState({opacity}); 
+                }, 200)
+
+            }
+
+            // Before unmounting, this API will be called
+            componentWillUnmount(){
+                // clean timer
+                clearInterval(this.timer);
+            }
+            
+
+            //  After initialing and updating state, this will be called 
+            render(){
+
+
+
+                return (
+                        <div>
+                            <h2 style={{opacity:this.state.opacity}}>What to do if you can’t learn React</h2>
+                            <button onClick ={this.removeNode}>I don't want to live anymore</button>
+                        </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Life/>,document.getElementById('test'));
+
+
+        
+
+
+    </script>
+
+
+</html>

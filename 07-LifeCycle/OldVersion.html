@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test"></div>
+     <div id="testParent"></div>
+
+
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        class ParentClass extends React.Component{
+
+            state ={carBrand : 'BMW'}
+
+            changeCar = () =>{
+                const {carBrand} = this.state;
+                this.setState({carBrand : 'Toyota'});
+            }
+
+            render(){
+                return (
+                    <div>
+                        <div>I am ParentClassCoponent</div>
+                        <button onClick={this.changeCar}>changeCar</button>
+                        <ChildClass carBrand={this.state.carBrand}/>
+                    </div>
+                )
+            }
+
+        }
+
+        class ChildClass extends React.Component{
+
+
+            componentWillReceiveProps(){
+                console.log('ChildClass - > componentWillReceivePorps')
+            }
+            
+            render(){
+                return (
+                <div>
+                    I am ChildClass component and the brand is : {this.props.carBrand} 
+                </div>
+            )
+            }
+        }   
+
+
+
+
+        // create component
+        class Count extends React.Component{
+            
+            constructor(props){
+                console.log('Count - > constructor')
+                super(props);
+            }
+
+            state = {count : 0}
+
+            addCount = () =>{
+                let {count} = this.state;
+                this.setState({count : count + 1});
+            }
+
+            forceUpdateCount = () =>{
+                this.forceUpdate()
+            }
+
+            unmountCount = () =>{
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+            }
+
+            componentWillMount(){
+                console.log('Count - > componentWillMount')
+            }
+
+            componentDidMount(){
+                console.log('Count - > componentDidMount')
+            }
+
+            // if developers don't declare this method, it will reture true as default value
+            shouldComponentUpdate(){
+                console.log('Count - > shouldComponentUpdate')
+                return true;
+            }
+
+            
+            componentWillUpdate(){
+                console.log('Count - > componentWillUpdate')
+            }
+
+            componentDidUpdate(){
+                console.log('Count - > componentDidUpdate')
+            }
+
+            componentWillUnmount(){
+                console.log('Count - > componentWillUnmount')
+            }
+
+            
+
+            render(){
+                console.log('Count - > render')
+                return (
+                    <div>
+                        <h2>The current sum is  {this.state.count}</h2>
+                        <button onClick={this.addCount}>Click here to plus 1 </button>
+                        <button onClick={this.unmountCount}>Click here to remove count </button>
+                        <button onClick={this.forceUpdateCount}>Force update </button>
+                    </div>
+                )    
+            }
+   
+        }
+
+        ReactDOM.render(<Count/>,document.getElementById('test'));
+        ReactDOM.render(<ParentClass/>,document.getElementById('testParent'));
+
+        
+
+
+    </script>
+
+
+</html>

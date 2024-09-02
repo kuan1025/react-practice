@@ -538,6 +538,46 @@ class Login extends React.Component {
     }
 }
 ```
+# React Component Lifecycle
+
+React components go through several specific stages from creation to termination. Throughout these stages, React provides a series of lifecycle hook functions (also known as lifecycle methods) that are called at particular moments. By defining components, we can perform specific tasks at these particular points in the component's lifecycle.
+
+## Old Lifecycle Structure
+
+In the old version of React, the component lifecycle is divided into three main phases:
+
+1. **Mounting** - When the component is being inserted into the DOM.
+   - `constructor()`
+   - `componentWillMount()` (deprecated)
+   - `render()`
+   - `componentDidMount()`
+
+2. **Updating** - When the component is being re-rendered as a result of changes to its props or state.
+   - `componentWillReceiveProps(nextProps)` (deprecated)
+   - `shouldComponentUpdate(nextProps, nextState)`
+   - `componentWillUpdate(nextProps, nextState)` (deprecated)
+   - `render()`
+   - `componentDidUpdate(prevProps, prevState)`
+
+3. **Unmounting** - When the component is being removed from the DOM.
+   - `componentWillUnmount()`
+
+These lifecycle methods provide a powerful way to execute code at specific stages of a component’s existence. However, some methods have been deprecated in newer versions of React, as the React team has introduced more efficient patterns and hooks.
+
+### Deprecated Lifecycle Methods:
+- `componentWillMount()`
+- `componentWillReceiveProps(nextProps)`
+- `componentWillUpdate(nextProps, nextState)`
+
+These methods have been deprecated in favor of more robust alternatives in the new lifecycle methods introduced in React 16.3 and beyond.
+
+**Note:** If you are using an older version of React, you may encounter these lifecycle methods, but it's recommended to upgrade to the latest version of React and adopt the new lifecycle methods.
+
+## Old Lifecycle Diagram
+
+Below is a diagram illustrating the old structure of the React component lifecycle:
+
+![alt text](./image/lifeCycle.png)
 
 
 
