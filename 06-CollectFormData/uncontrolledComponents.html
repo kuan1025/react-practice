@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test"></div>
+
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        // create component
+        class Login extends React.Component{
+            
+            handleSubmit = (event) => {
+                event.preventDefault();
+                 
+                const {userName, password} = this;
+                console.log(userName.value)
+                console.log(password.value)
+            }
+
+            render(){
+
+                return (
+                        <form onSubmit={this.handleSubmit}>
+                            UserName : <input ref={ c => this.userName = c} type="text" name = "username" />
+                            Password : <input ref={ c => this.password = c} type="password" name = "password" />
+                            <button>log in</button>
+                        </form>
+                )
+            }
+        }
+
+        ReactDOM.render(<Login/>,document.getElementById('test'));
+
+
+        
+
+
+    </script>
+
+
+</html>

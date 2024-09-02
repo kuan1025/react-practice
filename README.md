@@ -486,10 +486,58 @@ btnOnClick = () => {
 }
 ```
 
+## Controlled and Uncontrolled Components in React
 
+### Controlled Components
 
+Controlled components in React refer to form elements whose values are controlled by the React state. In this approach, the React component renders the form and also manages the user input, making the React state the "single source of truth" for the form data.
 
+### Example:
+```javascript
+saveName = (event) => {
+    this.setState({ name: event.target.value });
+}
 
+savePwd = (event) => {
+    this.setState({ pwd: event.target.value });
+}
+
+render() {
+    return (
+        <form action="http://www.baidu.com" onSubmit={this.login}>
+            Username: <input value={this.state.name} onChange={this.saveName} type="text" />
+            Password: <input value={this.state.pwd} onChange={this.savePwd} type="password" />
+            <button>Login</button>
+        </form>
+    );
+}
+
+```
+
+### Uncontrolled Components
+
+Uncontrolled components, on the other hand, allow form elements to maintain their own internal state without updating the React state. The data entered by the user is accessed only when needed, typically via a `ref`.
+
+```javascript
+class Login extends React.Component {
+
+    login = (event) => {
+        event.preventDefault(); // Prevent form submission
+        console.log(this.name.value);
+        console.log(this.pwd.value);
+    }
+
+    render() {
+        return (
+            <form action="http://www.baidu.com" onSubmit={this.login}>
+                Username: <input ref={self => this.name = self} type="text" name="username" />
+                Password: <input ref={self => this.pwd = self} type="password" name="password" />
+                <button>Login</button>
+            </form>
+        );
+    }
+}
+```
 
 
 
