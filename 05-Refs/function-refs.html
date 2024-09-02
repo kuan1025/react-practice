@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test"></div>
+
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        // create component
+        class Demo extends React.Component{
+
+
+            showData =() =>{
+                console.log(this.input1.value)
+            }
+
+
+
+            render() {
+                return (
+                <div>
+                    <input ref={ (node) => {this.input1 = node} } type="text" placeholder="click to display data"/>&nbsp;   
+                    <button onClick={this.showData}>click me to display the data on the left </button>&nbsp;
+ 
+                </div>
+            )
+            }
+
+
+        }
+
+        ReactDOM.render(<Demo/>,document.getElementById('test'));
+
+
+        
+
+
+    </script>
+
+
+</html>

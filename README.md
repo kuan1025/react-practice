@@ -427,12 +427,64 @@ function Person(props) {
 
 ```
 
+## Refs
+
+Refs provide a way to access DOM nodes or React elements that are created in the `render` method.
+
+Types of Refs
+
+React offers three main ways to create refs:
 
 
+### 1. String Refs
+You can directly add a ref attribute to a DOM node to access it later. This method stores the DOM element in the component's refs object, allowing you to access the node through this.refs.
 
+```javaScript
+<input ref="dian" type="text" placeholder="Click to alert" />
 
+inputBlur = () => {
+    alert(this.refs.dian.value);
+}
 
+```
 
+### 2. Callback Refs
+
+With callback refs, you can pass a function as the `ref` attribute. The function receives the DOM element as its argument, allowing you to store it in a component property.
+
+```javaScript
+<input ref={self => { this.dian = self; console.log(self); }} placeholder="Click to alert" />
+```
+
+You can also extract the function and reference it:
+
+```javaScript
+isRef = (self) => {
+    this.dian = self;
+    console.log(self);
+}
+
+<input ref={this.isRef} type="text" placeholder="Click to alert" />
+```
+
+Note:
+In React, there is a subtle difference with the callback ref method. When the component's state is updated and triggers a re-render, the function defined in the ref will be called twice. The first call passes null for initialization, and the second call passes the node information. Defining the ref function within the class can prevent it from being called twice during a re-render.
+
+### 3. API Refs
+
+React provides a built-in API for creating refs, which automatically assigns the DOM element to a `current` property of the ref object. Each ref needs to be created with this API and attached to the desired DOM node
+
+```javaScript
+MyRef = React.createRef();
+MyRef1 = React.createRef();
+
+<input ref={this.MyRef} type="text" placeholder="Click to alert" />
+<input ref={this.MyRef1} type="text" placeholder="Click to alert" />
+
+btnOnClick = () => {
+    console.log(this.MyRef.current.value);
+}
+```
 
 
 

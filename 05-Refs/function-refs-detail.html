@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test"></div>
+
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        // create component
+        class Demo extends React.Component{
+
+
+            showData =() =>{
+                console.log(this.input1.value)
+            };
+
+            changeWeather=() =>{
+                this.setState({isHot : !this.state.isHot}) ;
+            };
+
+            bindNode = (node) =>{
+                this.input1 = node;
+                console.log('@', node);
+            }
+
+            state = {isHot : false}
+
+
+
+            render() {
+                return (   
+                <div>
+                    <h2>Today is  {this.state.isHot ? 'hot' : 'not hot' }</h2>
+                    <button onClick={this.changeWeather}>click me to change weather </button>&nbsp;
+                    
+                    {/* Each rendering will call the function defined by ref. If there is subsequent rendering, the function of ref will be called repeatedly.
+                         The first time will be passed null and cleared (initialized) and the second time it will be passed into node.  */}
+
+                    {/*<input ref={ (node) => {this.input1 = node; console.log('@', node)} } type="text" placeholder="click to display data"/>&nbsp;  */} 
+                    
+                    
+                    {/* define the function in the class can avoid the function be called twice   */}
+                    <input ref={this.bindNode} type="text" placeholder="click to display data"/>&nbsp;
+                    <button onClick={this.showData}>click me to display the data on the left </button>&nbsp;
+
+ 
+                </div>
+            )
+            }
+
+
+        }
+
+        ReactDOM.render(<Demo/>,document.getElementById('test'));
+
+
+        
+
+
+    </script>
+
+
+</html>
