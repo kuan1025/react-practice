@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test"></div>
+
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/react.development.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/react-dom.development.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        // create component
+        class Login extends React.Component{
+            
+            state = { userName : '' , password : ''};
+
+            /*
+            Advanced functions:
+                 1. If the parameter of the function is a function
+                 2. If the function returns a function
+            Currying functions:
+            By continuing to return functions through function calls,
+            the function encoding form of receiving parameters multiple times and finally processing them uniformly is realized.
+
+            For example Promise(), setTimeOut(), arr.map() is Advanced functions
+
+            Example of Currying function
+
+            function sum(a,b,c){
+                return a + b + c;
+            }
+
+            currying ->
+
+            sum(1)(2)(3);
+
+            function sum(a){
+                return (b) =>{
+                    return (c) => {
+                        a + b + c;
+                    }
+                }
+            }
+
+            */
+
+            handleSubmit = (event) => {
+                event.preventDefault();
+                 
+                const {userName, password} = this.state;
+                console.log(userName)
+                console.log(password)
+            }
+
+            saveFormData = (attributeName) =>  {
+
+                return (event) =>{
+                    // object[] Declare the text in [] as attribute
+                    this.setState({[attributeName]:event.target.value});
+                }
+            }
+
+            render(){
+
+                return (
+                        <form onSubmit={this.handleSubmit}>
+                            UserName : <input onChange={this.saveFormData('userName')} type="text" name = "username" />
+                            Password : <input onChange={this.saveFormData('password')} type="password" name = "password" />
+                            <button>log in</button>
+                        </form>
+                )
+            }
+        }
+
+        ReactDOM.render(<Login/>,document.getElementById('test'));
+
+
+        
+
+
+    </script>
+
+
+</html>
