@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test"></div>
+     <hr/>
+     <div id="test1"></div>
+
+
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/17.0.1/react.development17.0.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/17.0.1/react-dom.development17.0.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/17.0.1/babel.min.js"></script>
+
+    <script type="text/babel">
+
+    class Person extends React.Component{
+        state = {
+            person:[
+                {id:1,name:"Jack",age:18},
+                {id:2,name:"Ted",age:19}
+            ]
+        }
+
+        addObject = () =>{
+            let {person} = this.state;
+            const p = {id:(person.length+1),name:"Kuan",age:25};
+            // this.setState({person:[p,...person]});
+            this.setState({person:[p,...person]});
+        }
+
+        render() {
+            return (
+                <div>
+                    <button onClick={this.addObject}>click to add a person</button>
+                    <ul>
+                        {
+                            this.state.person.map((p,index)=>{
+                               return <li key = {p.id}>{p.name}<input type="text"/></li>
+                            })
+                        }
+                    </ul>
+                </div>
+            )
+        }
+       
+    }
+
+    class Person1 extends React.Component{
+        state = {
+            person:[
+                {id:1,name:"Jack",age:18},
+                {id:2,name:"Ted",age:19}
+            ]
+        }
+
+        addObject = () =>{
+            let {person} = this.state;
+            const p = {id:(person.length+1),name:"Kuan",age:25};
+            this.setState({person:[p,...person]});
+
+        }
+
+        render() {
+            return (
+                <div>
+                    <button onClick={this.addObject}>click to add a person</button>
+                    <ul>
+                        {
+                            this.state.person.map((p,index)=>{
+                               return <li key = {p.index}>{p.name}<input type="text"/></li>
+                            })
+                        }
+                    </ul>
+                </div>
+            )
+        }
+       
+    }
+    
+        ReactDOM.render(<Person />,document.getElementById('test'));
+        ReactDOM.render(<Person1 />,document.getElementById('test1'));
+    
+        
+
+
+    </script>
+
+
+</html>
