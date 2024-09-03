@@ -580,6 +580,99 @@ Below is a diagram illustrating the old structure of the React component lifecyc
 ![alt text](./image/lifeCycle.png)
 
 
+## React Component Lifecycle (Latest Version)
+
+In the latest versions of React, certain lifecycle hooks have been deprecated. According to the official React documentation:
+
+> **The most important lesson we've learned is that outdated lifecycle methods often lead to unsafe coding practices.**
+
+The specific lifecycle methods that have been deprecated are:
+
+- `componentWillMount`
+- `componentWillReceiveProps`
+- `componentWillUpdate`
+
+These lifecycle methods are often misunderstood and misused. Moreover, we anticipate that their potential for misuse could be even greater with the introduction of asynchronous rendering in future versions of React. Therefore, in upcoming versions, these lifecycle methods will be prefixed with `UNSAFE_`. (Here, "unsafe" does not refer to security but rather indicates that code using these lifecycle methods is more likely to contain bugs in future versions of React, especially when asynchronous rendering is enabled.)
+
+### Deprecated Methods in New Versions:
+
+- `UNSAFE_componentWillMount`
+- `UNSAFE_componentWillReceiveProps`
+- `UNSAFE_componentWillUpdate`
+
+Although these methods with the `UNSAFE_` prefix are still available, React's official recommendation is to avoid using them. There is a possibility that these methods will be completely removed in future versions.
+
+### New Lifecycle Diagram
+
+![alt text](./image/lifecycle2.png)
+
+### Differences Between Old and New React Lifecycles
+
+From the updated lifecycle diagram, we can observe the following key differences between the old and new React lifecycle:
+
+### 1. Deprecated Lifecycle Methods
+The following three lifecycle hooks have been deprecated:
+- `componentWillMount`
+- `componentWillReceiveProps`
+- `componentWillUpdate`
+
+These methods are still available, but it's recommended to avoid using them as they might be removed in future React versions.
+
+### 2. Introduction of New Lifecycle Methods
+Two new lifecycle methods have been introduced in the updated React lifecycle:
+
+#### `static getDerivedStateFromProps(props, state)`
+- **When it's called:** This method is invoked right before calling the `render` method, both during the initial mounting and subsequent updates.
+- **Characteristics:**
+  - It must be declared as a static method.
+  - It receives the component's props and state as arguments.
+  - It must return a value, which can either be `null` or an object representing the new state.
+  - Since this method is called on both initialization and updates, returning a new state object will overwrite the existing state. Therefore, modifying the state within this method will not work as expected.
+
+#### `getSnapshotBeforeUpdate(prevProps, prevState)`
+- **When it's called:** This method is invoked right before the most recently rendered output is committed to the DOM.
+- **Purpose:** It allows your component to capture some information from the DOM (e.g., scroll position) before it potentially changes.
+- **Return Value:** Any value returned by this method will be passed as a parameter to `componentDidUpdate()`.
+
+### Example of using getSnapshotBeforeUpdate()
+
+Continuously outputs content in a fixed area
+
+```javascript
+  class New extends React.Component{
+
+        state = {num:[]};
+
+        componentDidMount(){
+            setInterval(()=>{
+                let {num} = this.state;
+                const news = num.length + 1;
+                this.setState({num:[news,...num]})
+            },500)
+        }
+
+        getSnapshotBeforeUpdate(){
+            return this.refs.list.scrollHeight;
+        }
+
+        componentDidUpdate(preProps,preState,height){
+            this.refs.list.scrollTop += (this.refs.list.scrollHeight - height);
+        }
+
+
+        render(){
+            return (
+
+                <div ref = "list" className = "list">{
+                    this.state.num.map((n,index)=>{
+                    return <div className="news" key={index} >Article {n}</div>
+                    })
+                }</div>
+            )
+        }
+
+    }
+```
 
 
 

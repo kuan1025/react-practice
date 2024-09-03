@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .list{
+         height: 150px;
+         width: 200px;
+         background-color: aqua;
+         overflow:auto;
+    }
+    .news{
+        height: 30px;
+    }
+</style>
+<body>
+
+     <!-- perpare a container -->
+     <div id="test"></div>
+     <div id="testParent"></div>
+
+
+</body>
+
+    <!-- import react core lib -->
+    <script type="text/javascript" src="../React-js/17.0.1/react.development17.0.js"></script>
+    <!-- import react-dom lib, supporting react control DOM  -->
+    <script type="text/javascript" src="../React-js/17.0.1/react-dom.development17.0.js"></script>
+    <!-- import babel , convert jsx to js -->
+    <script type="text/javascript" src="../React-js/17.0.1/babel.min.js"></script>
+
+    <script type="text/babel">
+
+    class New extends React.Component{
+
+        state = {num:[]};
+
+        componentDidMount(){
+            setInterval(()=>{
+                let {num} = this.state;
+                const news = num.length + 1;
+                this.setState({num:[news,...num]})
+            },500)
+        }
+
+        getSnapshotBeforeUpdate(){
+            return this.refs.list.scrollHeight;
+        }
+
+        componentDidUpdate(preProps,preState,height){
+            this.refs.list.scrollTop += (this.refs.list.scrollHeight - height);
+        }
+
+
+        render(){
+            return (
+
+                <div ref = "list" className = "list">{
+                    this.state.num.map((n,index)=>{
+                    return <div className="news" key={index} >Article {n}</div>
+                    })
+                }</div>
+            )
+        }
+
+    }
+
+        ReactDOM.render(<New/>,document.getElementById('test'));
+  
+
+        
+
+
+    </script>
+
+
+</html>
