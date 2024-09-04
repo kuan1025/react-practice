@@ -770,6 +770,89 @@ The Diff algorithm in React is responsible for comparing the new virtual DOM wit
   - React creates a new real DOM and renders it on the page.
 
 
+## React Scaffolding
+
+1. **Install and Create a New Project**
+
+   ```bash
+   npx create-react-app hello-react
+   ```
+2. ```
+    bash npm start 
+    ```
+
+### Handling Style Conflicts
+
+As the number of components increases, the styles also become more complex. This can lead to conflicts where styles in one component might overwrite styles in another due to the order in which components are imported.
+
+To avoid these style conflicts, follow these steps:
+
+1. Rename the CSS File:
+
+2. Change the file name from hello.css to hello.module.css.
+Import and Use the Styles:
+
+``` javascript
+import React, { Component } from 'react';
+import hello from './hello.module.css'; // Assign a name to the import
+
+export default class Hello extends Component {
+    render() {
+        return (
+            <h1 className={hello.title}>Hello</h1> // Use curly braces to apply the style
+        );
+    }
+}
+
+```
+
+
+## Componentized Development Workflow
+
+1. Component Breakdown:
+
+     Break down the UI and extract components.
+
+2. Implement Static Components:
+
+    Build the structure and layout without any dynamic behavior.
+3. Implement Dynamic Components:
+
+    Dynamically display initial data.
+    Define data types, names, and decide which component will hold the data.
+    Handle interactions.
+
+
+### Key Considerations
+
+1. Component Breakdown and Static Implementation:
+
+     Pay attention to the usage of `className` and `style`.
+
+2. Dynamic Initialization of Lists:
+
+    How to determine which component's state should hold the data?
+
+    If only one component uses the data, store it in that component's state.
+
+    If multiple components use the data, store it in the common parent component's state (state lifting).
+
+3. Communication Between Parent and Child Components:
+
+    Parent to Child: Pass data through `props`.
+    Child to Parent: Pass data through `props`. The parent should pass a function to the child component in advance.
+
+4. Distinguish Between `defaultChecked` and `checked`:
+
+    `defaultChecked` is executed only once during initialization.
+    `checked` does not have this limitation but requires the addition of an onChange method.
+    Similarly, understand the difference between `defaultValue` and `value`.
+5. State Management:
+
+    The state and methods to manipulate the state should be located in the same component.
+
+
+
 
 
 
