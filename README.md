@@ -852,15 +852,86 @@ export default class Hello extends Component {
     The state and methods to manipulate the state should be located in the same component.
 
 
+# React AJAX 
+
+React focuses on rendering the UI and does not include built-in methods for sending AJAX requests. Therefore, you need to integrate third-party libraries or create your own wrappers for AJAX requests.
+
+One popular library for handling AJAX in React is **Axios**.
+
+## Handling Cross-Origin Issues
+
+During development, you might face **CORS (Cross-Origin Resource Sharing)** issues. This happens when the protocol, domain, or port of the requested URL differs from the current page's URL, which is known as **cross-origin**.
+
+### Solution: Using a Proxy in React
+
+To resolve cross-origin issues in React, you can configure a proxy. Here are two common methods:
+
+### Method 1: Configuring Proxy in `package.json`
+
+Add the following configuration to your `package.json`:
+
+```json
+"proxy": "http://localhost:5000"
+```
+
+### Pros:
+
+Simple configuration.
+
+You don't need to add any prefix when making requests.
+
+### Cons:
+You can only configure one proxy.
+
+### How it works:
+
+When you request a resource that does not exist on the development server (running on port 3000), the request is forwarded to port 5000. The proxy prioritizes matching front-end resources.
+
+### Method 2: Using `setupProxy.js`
+
+1. Create Proxy Configuration File
+
+    In the src directory, create a new file called `setupProxy.js`.
+
+2. Define Proxy Rules
+
+    In `setupProxy.js`, configure the proxy rules as follows:
+
+```javascript
+const proxy = require('http-proxy-middleware');
+
+module.exports = function(app) {
+  app.use(
+    proxy('/api1', {
+      target: 'http://localhost:5000', 
+      changeOrigin: true, 
+      pathRewrite: {'^/api1': ''} 
+    }),
+    proxy('/api2', {
+      target: 'http://localhost:5001',
+      changeOrigin: true,
+      pathRewrite: {'^/api2': ''}
+    })
+  );
+}
+
+```
+### Pros:
+
+    You can configure multiple proxies.
+    More flexible control over whether a request should go through a proxy.
+### Cons:
+    More complex setup.
+    When making requests, you must add a prefix (e.g., /api1 or /api2).
 
 
+### Proxy Configuration Details:
 
-
-
-
-
-
-
+- **`target`**: Specifies the backend server that will handle the forwarded request.
+- **`changeOrigin`**: Controls the value of the `Host` header in the request.
+  - `true`: The `Host` header will match the target server (e.g., `localhost:5000`).
+  - `false`: The `Host` header will match the original request (e.g., `localhost:3000`).
+- **`pathRewrite`**: Modifies the URL path by removing or replacing the specified prefix (e.g., `/api1`), ensuring that the backend receives the correct request path.
 
 
 
