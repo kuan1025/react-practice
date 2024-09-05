@@ -16,15 +16,22 @@ export default class Item extends Component {
         }
     }
 
+    handleDelete = (id) => {
+        if(window.confirm('Are you sure?')){
+            this.props.deleteTask(id);
+        }       
+    }
+
   render() {
     const {id,name, done} = this.props;
+    const {mouse} = this.state;
     return (
-    <li style={{backgroundColor: this.state.mouse? '#ddd':'white'}} onMouseEnter={this.handleMouse(true)} onMouseOut={this.handleMouse(false)}>
+    <li style={{backgroundColor: this.state.mouse? '#ddd':'white'}} onMouseEnter={this.handleMouse(true)} onMouseLeave={this.handleMouse(false)}>
         <label>
-            <input type='checkbox' defaultChecked={done} onChange={this.handleCheck(id)}/>
+            <input type='checkbox' checked={done} onChange={this.handleCheck(id)}/>
             <span>{name}</span>
         </label>
-        <button className='btn btn-danger' style={{display: this.state.mouse ? 'block' : 'none'}}>delete</button> 
+        <button className='btn btn-danger' onClick={() => this.handleDelete(id)} style={{display: mouse? 'block' : 'none'}}>delete</button> 
     </li>
     )
   }

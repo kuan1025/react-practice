@@ -13,6 +13,14 @@ export default class App extends Component {
         this.setState({ todos: newTask })
     }
 
+    deleteTask = (id) =>{
+        const {todos} = this.state;
+        const newTodos = todos.filter((item) =>{
+            return item.id !== id;
+        })
+        this.setState({todos : newTodos})
+    }
+
     changeTaskStatus = (id, done) => {
         const { todos } = this.state;
         const newTodos = todos.map((item) => {
@@ -24,6 +32,19 @@ export default class App extends Component {
         })
         this.setState({todos : newTodos})
     }
+
+    selectAllTodo = (done) =>{
+        const {todos} = this.state;
+        const selectAllArr = todos.map((item)=>{
+            return {...item,done}
+        })
+        this.setState({todos: selectAllArr});
+    }
+
+    deleteAllTasks = () =>{
+        this.setState({todos: []});
+    }
+
 
     state = {
         todos: [
@@ -41,8 +62,8 @@ export default class App extends Component {
             <div className="todo-container">
                 <div className="todo-wrap">
                     <Header addTask={this.addTask} />
-                    <List todos={todos} changeTaskStatus ={this.changeTaskStatus} />
-                    <Footer />
+                    <List todos={todos} changeTaskStatus ={this.changeTaskStatus}  deleteTask = {this.deleteTask}/>
+                    <Footer todos={todos} deleteAllTasks = {this.deleteAllTasks} selectAllTodo ={this.selectAllTodo}/>
                 </div>
             </div>
         )
