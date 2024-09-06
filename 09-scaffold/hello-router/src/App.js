@@ -1,11 +1,12 @@
 // create component
 
 import React, { Component } from "react";
-import { NavLink,Link, Route } from "react-router-dom";
+import { NavLink,Link, Route , Switch} from "react-router-dom";
 import About from './page/About'
 import Home from './page/Home'
 import Header from './component/Header'
 import MyNavLink from './component/MyNavLink'
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 export default class App extends Component {
 
@@ -34,9 +35,13 @@ export default class App extends Component {
                     <div className="col-xs-6">
                         <div className="panel">
                             <div className="panel-body">
+                                {/* register Route /  'Switch' can optizime performance. If router find matching path,
+                                 it will not consistenly finding the rest of the component */}
+                                <Switch> 
                                     <Route path='/about' component={About} />
-                                    <Route path='/home' component={Home} />
-                                    
+                                    <Route exact path='/home' component={Home} />
+                                    <Redirect to="/about" />
+                                </Switch>
                             </div>
                         </div>
                     </div>

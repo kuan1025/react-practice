@@ -1062,3 +1062,67 @@ An important point is that the content inside the tag will become a `children` p
 ```html
 <MyNavLink to="/home">home</MyNavLink>
 ```
+
+##  Resolving Path Conflicts with `Switch`
+
+Consider the following code:
+
+```html
+<Route path="/home" component={Home}></Route>
+<Route path="/about" component={About}></Route>
+<Route path="/about" component={About}></Route>
+```
+
+Here, we see that the About component is rendered twice. Why does this happen?
+
+This is due to how the Route mechanism works. Once it matches the first `/about` route, it continues to match subsequent routes, leading to the About component being rendered twice. To address this issue, you can use the Switch component to wrap your routes.
+
+```html
+<Switch>
+    <Route path="/home" component={Home}></Route>
+    <Route path="/about" component={About}></Route>
+    <Route path="/about" component={About}></Route>
+</Switch>
+
+```
+When using `Switch`, make sure to import the `Switch` component from react-router-dom. This will resolve the issue and ensure that only the first matching route is rendered.
+
+## 5. Resolving Issues with Styles Not Loading in Nested Routes
+
+Here are three methods to solve this problem:
+
+### 5.1 Use Absolute Paths for Styles
+```javasctipt
+<link href="/css/bootstrap.css" rel="stylesheet">
+```
+### 5.2 Use `%PUBLIC_URL%`
+```javasctipt
+<link href="%PUBLIC_URL%/css/bootstrap.css" rel="stylesheet">
+```
+### 5.3 Use `Use HashRouter`
+
+HashRouter adds a # to the URL, which means that the part of the URL after the # is not handled by the server, thus avoiding path issues for styles.
+
+## 6. Route Redirection
+
+When configuring routes, initially opening a page might not match any component. This results in an empty or inappropriate page. To handle this, you should set up a default route to redirect to a specific component.
+
+You can use `Redirect` for this purpose:
+
+```html
+<Redirect to="/home" />
+```
+
+With this line of code, if the page cannot find the specified path, it will redirect to the `/home` page. This way, accessing port 3000 will automatically redirect to `/home`, achieving the desired effect.
+
+Here’s an example of how to set up default routing to the `/home` component:
+``` html
+<Switch>
+    <Route path="/about" component={About}/>
+    {/* exact={true}: Enables strict matching mode; path must be exact */}
+    <Route path="/home" component={Home}/>
+    {/* Redirect: If none of the above routes match, redirect to this path */}
+    <Redirect to="/home"/>
+</Switch>
+
+```
