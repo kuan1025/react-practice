@@ -935,3 +935,130 @@ module.exports = function(app) {
 
 
 
+# 【react-router】
+
+## 1. Preparation
+
+### 1.1 SPA
+
+To reduce issues with traditional web applications, we have another type of application called SPA (Single Page Application). 
+
+SPAs are faster than traditional web applications because they execute logic in the browser itself rather than on the server. After the initial page load, **only data is exchanged**, not the entire HTML, which reduces bandwidth usage. They can independently request markup and data, rendering the page directly in the browser.
+
+**Disadvantages**
+
+1. SPA cannot remember the previous scroll position when navigating back to a page.
+2. Using the browser’s forward and back buttons may trigger unnecessary requests, without properly utilizing caching.
+
+### How Frontend Routing Works
+
+Frontend routing mainly relies on the browser's `history`, which is the browser's history stack.
+
+> `history` is an attribute under the BOM (Browser Object Model), and in HTML5, several APIs were added to manipulate the `history`.
+
+The browser’s history works like a stack, where moving forward is like pushing to the stack, and moving backward is like popping from the stack.
+
+Using the `listen` method, we can monitor route changes to detect path updates.
+
+In HTML5, the `createBrowserHistory` API allows creating a `history` stack, enabling manual manipulation of the browser’s history.
+
+New APIs: `pushState`, `replaceState`—similar in principle to hash-based routing. With HTML5, the URL in a single-page application doesn't include a `#`, making it more aesthetically pleasing.
+
+## 2. Understanding and Using react-router-dom
+
+React provides three types of routers:
+
+- Web (for frontend)
+- Native (for mobile apps)
+- Anywhere (for any environment)
+
+We primarily use the web version, which is the focus of this topic—`react-router-dom`.
+
+> A library specifically for web development.
+
+1. A React repository
+2. Commonly used—almost every application uses this library
+3. Specifically designed for SPA applications
+
+To install: `npm i react-router-dom@5`
+
+First, we need to structure the page layout, dividing it into a navigation section and a display section.
+
+We need to import the `react-router-dom` library to expose attributes like `Link` and `BrowserRouter`.
+
+```js
+import { Link, BrowserRouter, Route } from 'react-router-dom'
+```
+
+Change `<a>` tags in the navigation area to `<Link>` tags:
+```js
+<Link className="list-group-item" to="/about">About</Link>
+```
+We also need to use the `<Route>` tag to match paths and switch components accordingly:
+```js
+<Route path="/about" component={About}></Route>
+<Route path="/home" component={Home}></Route>
+```
+
+Finally, add a router. In the above code, we wrote two sets of routes, but an error will indicate that a router is needed to manage these routes. A page transition can only occur under the management of a single router.
+
+Therefore, wrap the outer tags of `Link` and `Route` tags with `BrowserRouter` (or HashRouter), but wrapping each individually isn't ideal when there are too many routes. To solve this, wrap the entire `App` component in `BrowserRouter` inside the `index.js` file in the `App.jsx` directory:
+```js
+// index.js
+<BrowserRouter>
+  <App />
+</BrowserRouter>
+
+```
+
+## 3. Routing Components vs General Components
+
+In our previous content, we treated the `Home` component and the `About` component as general components, placing them in the `components` folder under the `src` directory. However, we noticed that they differ slightly from ordinary components. For ordinary components, we reference them using tags. But as shown above, when using them as routes, we reference them using `{Home}`.
+
+From this, we can conclude that there are differences between general components and routing components:
+
+1. **Different Syntax**
+
+   - **General Component**: `<Demo/>`
+   - **Routing Component**: `<Route path="/demo" component={Demo}/>`
+   
+2. **Different Storage Locations**
+
+   - To standardize our code organization, routing components are typically placed in the `pages`/`views` folder, while general components are placed in the `components` folder.
+
+
+## 4. NavLink Tag
+
+### 4.1 Basic Usage
+
+The `NavLink` tag serves the same purpose as the `Link` tag but offers more functionality.
+
+In previous demos, you might have noticed that clicking a button did not highlight it. Normally, we can achieve the highlight effect by adding an `active` class to the tag.
+
+The `NavLink` tag helps us achieve this effect automatically. When a `NavLink` is selected, it will automatically add an `active` class to the tag.
+
+```html
+<NavLink className="list-group-item" to="/about">About</NavLink>
+{/* NavLink will look for the class specified by activeClassName="ss" when clicked.
+    By default, it is "active". This is because the Link component is fixed and cannot be customized. */}
+
+<NavLink activeClassName="ss" className="list-group-item" to="/about">About</NavLink>
+<NavLink className="list-group-item" to="/home">Home</NavLink>
+```
+By default, the NavLink tag adds the active class. However, you can customize this by adding an activeClassName attribute to the tag. The following code demonstrates how to use activeClassName to apply a specific class when the link is clicked
+
+### 4.2 `NavLink` Component Wrapping
+In the above `NavLink` tags, we repeatedly write out style names or activeClassName, which leads to redundant code. To improve this, we can encapsulate the `NavLink` into a `MyNavLink` component.
+
+First, create a new `MyNavLink` component:
+```html
+// Spread object properties using {...object} to apply all properties from the object
+<NavLink className="list-group-item" {...this.props} />
+
+```
+
+An important point is that the content inside the tag will become a `children` property. Therefore, when using `MyNavLink`, the content inside the tag will be part of the `props`, achieving the desired effect.
+
+```html
+<MyNavLink to="/home">home</MyNavLink>
+```
