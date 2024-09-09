@@ -38,8 +38,8 @@ export default class App extends Component {
                                 {/* register Route /  'Switch' can optizime performance. If router find matching path,
                                  it will not consistenly finding the rest of the component */}
                                 <Switch> 
-                                    <Route path='/about' component={About} />
-                                    <Route exact path='/home' component={Home} />
+                                    <Route exact path='/about' component={About} />
+                                    <Route path='/home' component={Home} />
                                     <Redirect to="/about" />
                                 </Switch>
                             </div>
