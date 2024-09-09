@@ -13,10 +13,10 @@ export default class Detail extends Component {
   render() {
     console.log(this.props);
     // Method1 params
-    // const { id, title } = this.props.match.params;
+    const { id, title } = this.props.match.params;
 
     // Method2 state
-    const { id, title } = this.props.location.state;
+    // const { id, title } = this.props.location.state;
     const result = DetailData.find(item => {
       return item.id === id
     })

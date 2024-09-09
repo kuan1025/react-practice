@@ -12,6 +12,29 @@ export default class HomeMsg extends Component {
     ]
   }
 
+  showReplace = (id,title) =>{
+    return () =>{
+      this.props.history.replace(`/home/HomeMsg/Detail/${id}/${title}`)
+    } 
+  }
+
+  showPush = (id,title) =>{
+      this.props.history.push(`/home/HomeMsg/Detail/${id}/${title}`)
+    
+  }
+
+  back=()=>{
+    this.props.history.goBack();
+  }
+
+  forward=()=>{
+    this.props.history.goForward();
+  }
+
+  go=()=>{
+    this.props.history.go(-2);
+  }
+
   render() {
 
     const { msgArr } = this.state;
@@ -26,16 +49,19 @@ export default class HomeMsg extends Component {
 
                   {/* transfer parameters through 'params' to router  */}
 
-                  {/* <Link to={`/home/HomeMsg/Detail/${msg.id}/${msg.title}`}>
+                  <Link to={`/home/HomeMsg/Detail/${msg.id}/${msg.title}`}>
                     {msg.title}
-                  </Link> */}
+                  </Link>
+                  <button onClick={ () => this.showPush(msg.id,msg.title)}>Push</button>
+                  <button onClick={this.showReplace(msg.id,msg.title)}>Replace</button>
 
                  {/* transfer parameters through 'state' to router  */}
 
-                  <Link to={{pathname:'/home/HomeMsg/Detail/',state:{id:msg.id, title:msg.title}}}>
+                  {/* <Link replace to={{pathname:'/home/HomeMsg/Detail/',state:{id:msg.id, title:msg.title}}}>
                     {msg.title}
-                  </Link>
+                  </Link> */}
                 </li>
+                
               )
             })
           }
@@ -44,11 +70,18 @@ export default class HomeMsg extends Component {
 
         {/* transfer parameter by 'params' */}
 
-        {/* <Route path="/home/HomeMsg/Detail/:id/:title" component={Detail} /> */}
+        <Route path="/home/HomeMsg/Detail/:id/:title" component={Detail} />
 
           {/* transfer parameter by 'state' */}
-        <Route path="/home/HomeMsg/Detail" component={Detail} />
+        {/* <Route path="/home/HomeMsg/Detail" component={Detail} /> */}
+
+
+        {/* those are properties of router */}
+        <button onClick={this.back}>Back</button>
+        <button onClick={this.forward}>forward</button>
+        <button onClick={this.go}>go</button>
       </div>
+      
     )
   }
 }

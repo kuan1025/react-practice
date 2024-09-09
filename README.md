@@ -1126,3 +1126,86 @@ Here’s an example of how to set up default routing to the `/home` component:
 </Switch>
 
 ```
+
+
+## 7. Route Navigation
+
+### 7.1 Push and Replace Modes
+
+By default, the push mode is enabled. This means that every time you navigate, a new address is pushed onto the stack. When you click back, you can return to the previous address.
+
+However, when reading messages, this frequent navigation might feel tedious. In such cases, you can enable the replace mode. Unlike push mode, replace mode **replaces** the current address with the new one, effectively updating the top of the stack.
+
+To enable replace mode, simply add the `replace` attribute to the link where it is needed.
+
+```jsx
+<Link replace to={{ pathname: '/home/message/detail', state: { id: msgObj.id, title: msgObj.title } }}>{msgObj.title}</Link>
+```
+
+### 7.2 Programmatic Route Navigation
+
+By leveraging the API on the `this.props.history` object, you can control route navigation, including forward and backward actions.
+
+```js
+        -this.prosp.history.push()
+        -this.prosp.history.replace()
+        -this.prosp.history.goBack()
+        -this.prosp.history.goForward()
+        -this.prosp.history.go(1)
+```
+You can also implement route navigation by binding events. For example, you can bind an `onClick` event to a button, and when the event is triggered, a callback function is executed to handle the navigation.
+
+### 7.3 withRouter
+
+When you need to add back or forward buttons within a page, you might encounter an issue where the **history object is unavailable**. This is because the component you're working with is a regular component.
+
+```js
+//push+params
+// this.props.history.push(`/home/message/detail/${id}/${title}`)
+
+//push+search
+// this.props.history.push(`/home/message/detail?id=${id}&title=${title}`)
+
+//push+state
+this.props.history.push(`/home/message/detail`,{id,title})
+
+//replace+params
+//this.props.history.replace(`/home/message/detail/${id}/${title}`)
+
+//replace+search
+// this.props.history.replace(`/home/message/detail?id=${id}&title=${title}`)
+
+//replace+state
+this.props.history.replace(`/home/message/detail`,{id,title})
+```
+
+Only route components can access the history object.
+
+To resolve this, you can use the `withRouter` function from the `react-router-dom` package to wrap your exported `Header` component. This allows regular components to access the history object and the special APIs provided by route components.
+
+
+```js
+// Header/index.jsx
+import { withRouter } from 'react-router-dom'
+// use `withRouter` export the class
+export default withRouter(index);
+```
+
+Simply import `withRouter` in the component you want to wrap, and you'll have access to these route-related features.
+
+## 8. Differences Between BrowserRouter and HashRouter
+
+#### **They differ in how they are implemented**
+
+For `BrowserRouter`, it uses the history API that React has wrapped specifically for it. The history in this context differs from the browser's history. Through this API, `BrowserRouter` can manage routing, but it’s important to note that this API was introduced in HTML5, so it is **not compatible with versions of Internet Explorer below IE9**.
+
+On the other hand, `HashRouter` works by utilizing the hash value in the URL. To put it simply, it's like an anchor navigation. Anchor tags save history, which enables the back and forward functionality in `HashRouter`. Moreover, `HashRouter` does not request the content after the `#` symbol, providing better compatibility.
+
+#### **Different display in the address bar**
+
+- `HashRouter` includes a `#` symbol in the URL path, such as `localhost:3000/#/demo/test`.
+
+#### **State changes after refreshing the page**
+
+1. In `BrowserRouter`, the state is saved in the history object, so refreshing does not lose the state.
+2. In `HashRouter`, refreshing the page causes the state to be lost.
