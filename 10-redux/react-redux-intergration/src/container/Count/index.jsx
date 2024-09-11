@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
-
-// import count UI component
-// import CountUI from '../../components/Count'
-
-import { createIncrementAction, ceateDecrementAction } from '../../redux/count_action'
-
-// import 'connect' to bind UI component and redux
+import { createIncrementAction, ceateDecrementAction } from '../../redux/actions/count'
 import { connect } from 'react-redux'
 
-//  The key in the object returned by the mapStateToProps function is used as the key passed to the UI component props,
-//  and the value is used as the value passed to the UI component props - State (return by reducer)
-const mapStateToProps = (state) => { // default : autowired state
-    return { count: state }
+
+const mapStateToProps = (state) => { 
+    return { count: state.count , person : state.person }
 }
 
 //  The key in the object returned by the mapDispatchToProps function is used as the key passed to the UI component props,
@@ -50,6 +43,8 @@ class Count extends Component {
     render() {
         return (
             <div>
+                <h2>I am Count component</h2>
+                <h4>Total number of people below is {this.props.person.length}</h4>
                 <h1>Now the sum is : {this.props.count}</h1>
                 <select ref={c => this.selectNumber = c}>
                     <option value='1'>1</option>

@@ -6,7 +6,9 @@ export default class App extends Component {
   render() {
     return (
       // pass counter store to container
-      <Count store = {store} />
+      // <Count store = {store} />
+      // index.js  Provider pass counter store to container
+      <Count />
     )
   }
 }

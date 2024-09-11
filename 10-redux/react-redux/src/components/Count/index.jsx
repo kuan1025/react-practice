@@ -33,13 +33,14 @@ export default class Count extends Component {
     */
    
 
-    componentDidMount(){
-        // store subscribe 'store'. If data managed by store is changed then render the page 
-        store.subscribe(()=>{
-            // this.setState({}) means not updating any data, but it can trigger render()
-            this.setState({})
-        })
-    }
+    // react-redux container can monitor the state. so if the component is managed by conntainer, the code below can be delete   
+    // componentDidMount(){
+    //     // store subscribe 'store'. If data managed by store is changed then render the page 
+    //     store.subscribe(()=>{
+    //         // this.setState({}) means not updating any data, but it can trigger render()
+    //         this.setState({})
+    //     })
+    // }
 
     render() {
         return (
